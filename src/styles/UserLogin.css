@@ -1,0 +1,152 @@
+.user-login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  box-sizing: border-box;
+  background: #070b19;
+  color: #f8fafc;
+  font-family: Arial, sans-serif;
+}
+
+.user-login-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 36px;
+  box-sizing: border-box;
+  border: 1px solid #263149;
+  border-radius: 18px;
+  background: #111827;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+
+.user-login-heading,
+.user-login-title {
+  text-align: center;
+}
+
+.user-login-logo {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px;
+  border-radius: 14px;
+  background: #2563eb;
+  color: white;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.user-login-heading h1 {
+  margin: 0;
+  color: #f8fafc;
+  font-size: 28px;
+}
+
+.user-login-heading p,
+.user-login-title p {
+  color: #94a3b8;
+}
+
+.user-login-title {
+  margin: 30px 0 24px;
+}
+
+.user-login-title h2 {
+  margin-bottom: 8px;
+  font-size: 22px;
+}
+
+.user-login-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.user-login-field label {
+  color: #e2e8f0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.user-login-field input {
+  width: 100%;
+  padding: 12px 14px;
+  box-sizing: border-box;
+  border: 1px solid #374151;
+  border-radius: 9px;
+  outline: none;
+  background: #0b1220;
+  color: #f8fafc;
+  font-size: 15px;
+}
+
+.user-login-field input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.user-login-button {
+  width: 100%;
+  margin-top: 8px;
+  padding: 13px;
+  border: none;
+  border-radius: 9px;
+  background: #2563eb;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.user-login-button:hover {
+  background: #1d4ed8;
+}
+
+.user-login-button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.user-login-error,
+.user-login-success {
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.user-login-error {
+  background: #451a1a;
+  color: #fecaca;
+}
+
+.user-login-success {
+  background: #14532d;
+  color: #bbf7d0;
+}
+
+.user-login-footer {
+  margin: 24px 0 0;
+  color: #94a3b8;
+  text-align: center;
+  font-size: 14px;
+}
+
+.user-login-footer a {
+  color: #60a5fa;
+  text-decoration: none;
+}
+
+.user-login-footer a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .user-login-card {
+    padding: 24px;
+  }
+}

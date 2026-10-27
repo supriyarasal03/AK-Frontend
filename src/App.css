@@ -1,0 +1,126 @@
+
+/* ===== Responsive screen-fit fixes ===== */
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+}
+
+html {
+  overflow-x: clip;
+}
+
+body {
+  min-width: 320px;
+  overflow-x: clip;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.landing-page {
+  width: 100%;
+  max-width: 100%;
+  min-height: 100vh;
+  overflow-x: clip;
+}
+
+.landing-header,
+.landing-footer {
+  width: 100%;
+  max-width: 100%;
+}
+
+.hero,
+.games-section,
+.results-section {
+  width: 100%;
+  max-width: 1240px;
+  margin-inline: auto;
+  padding-inline: clamp(16px, 3vw, 32px);
+}
+
+/* Laptop and desktop */
+.game-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .landing-header {
+    padding-inline: 24px;
+  }
+
+  .nav-links {
+    gap: 16px;
+  }
+
+  .hero {
+    gap: 20px;
+  }
+
+  .hero h1 {
+    font-size: clamp(38px, 5vw, 56px);
+  }
+
+  .game-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .landing-header {
+    padding: 14px 16px;
+  }
+
+  .hero {
+    grid-template-columns: minmax(0, 1fr);
+    padding-top: 32px;
+  }
+
+  .hero-copy,
+  .hero-visual {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .hero h1 {
+    font-size: clamp(34px, 9vw, 44px);
+    letter-spacing: -1px;
+    overflow-wrap: anywhere;
+  }
+
+  .hero-copy > p {
+    font-size: 14px;
+  }
+
+  .hero-actions .btn {
+    max-width: 100%;
+  }
+
+  .game-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .games-section,
+  .results-section {
+    padding-inline: 16px;
+  }
+
+  .orbit {
+    max-width: 85%;
+  }
+
+  .orbit-two {
+    max-width: 92%;
+  }
+
+  .section-heading {
+    align-items: flex-start;
+  }
+}

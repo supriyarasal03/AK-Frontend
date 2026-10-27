@@ -1,0 +1,223 @@
+:root {
+  --ak-sidebar-width: 268px;
+  --ak-sidebar-bg: #111c32;
+  --ak-sidebar-border: rgba(255, 255, 255, 0.09);
+  --ak-sidebar-text: #c5d0e2;
+  --ak-sidebar-muted: #8499bb;
+  --ak-primary: #5278f5;
+  --ak-page-bg: #f3f6fb;
+  --ak-text: #17233b;
+}
+
+.ak-admin-layout,
+.ak-admin-layout * {
+  box-sizing: border-box;
+}
+
+.ak-admin-layout {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  background: var(--ak-page-bg);
+  color: var(--ak-text);
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+}
+
+/* Sidebar */
+
+.ak-admin-sidebar {
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  width: var(--ak-sidebar-width);
+  height: 100vh;
+  background: var(--ak-sidebar-bg);
+  color: var(--ak-sidebar-text);
+  border-right: 1px solid var(--ak-sidebar-border);
+  transition: transform 0.25s ease;
+}
+
+.ak-sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 104px;
+  padding: 22px 18px;
+  border-bottom: 1px solid var(--ak-sidebar-border);
+}
+
+.ak-brand-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 42px;
+  width: 42px;
+  height: 42px;
+  color: #ffffff;
+  background: rgba(82, 120, 245, 0.18);
+  border: 1px solid rgba(139, 164, 255, 0.2);
+  border-radius: 12px;
+}
+
+.ak-brand-text {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+
+.ak-brand-name {
+  color: #ffffff;
+  font-size: 21px;
+  font-weight: 750;
+  letter-spacing: 0.5px;
+}
+
+.ak-brand-subtitle {
+  color: #aebed9;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+.ak-sidebar-close {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  padding: 7px;
+  color: #ffffff;
+  background: transparent;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* Navigation */
+
+.ak-sidebar-navigation {
+  flex: 1;
+  min-height: 0;
+  padding: 13px 12px 20px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-color: #34435e transparent;
+  scrollbar-width: thin;
+}
+
+.ak-menu-group {
+  margin-bottom: 17px;
+}
+
+.ak-menu-heading {
+  margin: 12px 10px 10px;
+  color: var(--ak-sidebar-muted);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+}
+
+.ak-menu-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  width: 100%;
+  min-height: 47px;
+  margin: 3px 0;
+  padding: 11px 12px;
+  color: var(--ak-sidebar-text);
+  text-decoration: none;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  transition:
+    background 0.18s ease,
+    color 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.ak-menu-link:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.ak-menu-link-active {
+  color: #ffffff;
+  background: rgba(82, 120, 245, 0.2);
+  border-color: rgba(115, 145, 255, 0.22);
+}
+
+.ak-menu-link-active::before {
+  position: absolute;
+  top: 9px;
+  bottom: 9px;
+  left: -12px;
+  width: 3px;
+  content: "";
+  background: #7895ff;
+  border-radius: 0 4px 4px 0;
+}
+
+.ak-menu-icon {
+  flex: 0 0 21px;
+  color: #b8c7df;
+}
+
+.ak-menu-link-active .ak-menu-icon {
+  color: #a8bcff;
+}
+
+.ak-menu-label {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 550;
+  line-height: 1.4;
+}
+
+.ak-menu-chevron {
+  flex: 0 0 17px;
+  color: #8092b0;
+  transition: transform 0.18s ease;
+}
+
+.ak-menu-link:hover .ak-menu-chevron {
+  transform: translateX(2px);
+}
+
+/* Sidebar profile and logout */
+
+.ak-sidebar-bottom {
+  padding: 14px 14px 16px;
+  border-top: 1px solid var(--ak-sidebar-border);
+}
+
+.ak-admin-mini-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 3px 14px;
+}
+
+.ak-profile-avatar,
+.ak-header-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 40px;
+  width: 40px;
+  height: 40px;
+  color: #dce5ff;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+}
+
+.ak-profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
