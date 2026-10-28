@@ -1,0 +1,309 @@
+/* Lottery आणि Lottery Results पानांसाठी अतिरिक्त styles.
+   बाकी (ak-panel, ak-table, ak-input, buttons) AdminDashboard.css / AdminPages.css मधून येतात. */
+
+.al-section {
+  padding: 0 18px 14px;
+}
+
+.al-section-label {
+  display: block;
+  margin-bottom: 8px;
+  color: #4b5a73;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.al-hint {
+  color: #78859a;
+  font-size: 11px;
+}
+
+.al-muted {
+  color: #78859a;
+  font-size: 12px;
+}
+
+.al-inline-error {
+  margin: 0;
+  color: #c0392b;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Running days */
+.al-days {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.al-day-chip {
+  position: relative;
+  padding: 7px 14px;
+  border: 1px solid #d9e0ec;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #4b5a73;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+}
+
+.al-day-chip input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.al-day-chip-active {
+  border-color: #4169e1;
+  background: #edf2ff;
+  color: #4169e1;
+}
+
+.al-day-chip:focus-within {
+  box-shadow: 0 0 0 3px rgba(65, 105, 225, 0.15);
+}
+
+/* Game rows (form) */
+.al-game-row {
+  margin-bottom: 8px;
+  display: grid;
+  grid-template-columns: minmax(150px, 2fr) 1fr 1fr auto;
+  gap: 10px;
+  align-items: end;
+}
+
+.al-game-row .ak-field label {
+  font-size: 11px;
+}
+
+.al-game-actions {
+  margin-top: 4px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+@media (max-width: 640px) {
+  .al-game-row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Game chips (table) */
+.al-game-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.al-game-chip {
+  padding: 3px 9px;
+  border-radius: 8px;
+  background: #f4f7fb;
+  color: #17243b;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.al-game-chip small {
+  margin-left: 4px;
+  color: #78859a;
+  font-weight: 500;
+}
+
+/* Result cell */
+.al-result {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.al-result strong {
+  color: #17243b;
+  font-size: 15px;
+  letter-spacing: 1px;
+}
+
+.al-result span {
+  color: #4169e1;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.al-result small {
+  color: #78859a;
+  font-size: 11px;
+}
+
+/* Modal */
+.al-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(17, 27, 49, 0.55);
+}
+
+.al-modal {
+  width: 100%;
+  max-width: 440px;
+  max-height: 100%;
+  overflow-y: auto;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 24px 60px rgba(17, 27, 49, 0.35);
+}
+
+.al-modal-header {
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 16px 16px 0 0;
+  color: #ffffff;
+}
+
+.al-modal-header h3 {
+  margin: 0;
+  font-size: 15px;
+}
+
+.al-modal-header button {
+  display: inline-flex;
+  border: 0;
+  background: transparent;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.al-modal-header-open {
+  background: #4169e1;
+}
+
+.al-modal-header-close {
+  background: #c0392b;
+}
+
+.al-modal-body {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.al-modal-footer {
+  padding: 0 18px 18px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.al-input-readonly {
+  background: #f4f7fb;
+  color: #78859a;
+}
+
+.al-digit-input {
+  letter-spacing: 3px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+/* ---- Lottery Entries ---- */
+.al-filter-bar {
+  padding: 18px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 14px;
+  align-items: end;
+}
+
+.al-stats {
+  padding: 0 18px 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.al-stat {
+  min-width: 140px;
+  padding: 10px 16px;
+  border: 1px solid #e8edf4;
+  border-radius: 12px;
+  background: #f9fbfe;
+}
+
+.al-stat span {
+  display: block;
+  color: #78859a;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.al-stat strong {
+  color: #17243b;
+  font-size: 20px;
+}
+
+.al-segment {
+  display: inline-flex;
+  padding: 3px;
+  border-radius: 10px;
+  background: #f4f7fb;
+}
+
+.al-segment button {
+  padding: 6px 14px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #4b5a73;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.al-segment button.al-segment-active {
+  background: #ffffff;
+  color: #4169e1;
+  box-shadow: 0 1px 4px rgba(17, 27, 49, 0.12);
+}
+
+.al-status {
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.al-status-win {
+  background: #e7f7ee;
+  color: #1e8a4c;
+}
+
+.al-status-lose {
+  background: #fdeaea;
+  color: #c0392b;
+}
+
+.al-status-pending {
+  background: #fff4dd;
+  color: #b7791f;
+}
+
+.al-you-badge {
+  margin-left: 8px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #edf2ff;
+  color: #4169e1;
+  font-size: 10px;
+  font-weight: 700;
+}

@@ -2,6 +2,7 @@
 import { useCallback, useEffect, useState } from "react";
 import axiosClient from "../../services/axiosClient";
 import "../../styles/FullSangamGame.css";
+import { useOutletContext } from "react-router-dom";
 
 const getToday = () => {
   const date = new Date();
@@ -18,6 +19,7 @@ const getErrorMessage = (error) =>
   "Something went wrong. Please try again.";
 
 export default function FullSangamGame() {
+    const { refreshUser } = useOutletContext();
   const [lotteries, setLotteries] = useState([]);
   const [entries, setEntries] = useState([]);
   const [coins, setCoins] = useState(null);
@@ -224,6 +226,9 @@ export default function FullSangamGame() {
       });
 
       await Promise.all([loadEntries(), loadCoins()]);
+
+
+        refreshUser();
     } catch (error) {
       setNotice({ type: "error", message: getErrorMessage(error) });
     } finally {

@@ -2,7 +2,7 @@
 import { useCallback, useEffect, useState } from "react";
 import axiosClient from "../../services/axiosClient";
 import "../../styles/TriplePanaGame.css";
-
+import { useOutletContext } from "react-router-dom";
 const getLocalDate = () => {
   const now = new Date();
   const year = now.getFullYear();
@@ -71,6 +71,7 @@ function getErrorMessage(error) {
 }
 
 export default function TriplePanaGame() {
+    const { refreshUser } = useOutletContext();
   const [form, setForm] = useState(initialForm);
   const [lotteries, setLotteries] = useState([]);
   const [entries, setEntries] = useState([]);
@@ -304,11 +305,15 @@ export default function TriplePanaGame() {
         entryBidDate: getLocalDate(),
       });
 
-      await Promise.all([
+           await Promise.all([
         loadEntries(),
         loadUserSession(),
       ]);
+      refreshUser();
     } catch (error) {
+
+
+
       setNotice({
         type: "error",
         message: getErrorMessage(error),

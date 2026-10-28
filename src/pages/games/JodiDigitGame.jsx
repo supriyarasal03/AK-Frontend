@@ -238,6 +238,8 @@ export default function JodiDigitGame() {
       setPoints("");
 
       await loadEntries();
+
+        refreshUser();
     } catch (error) {
       setNotice({
         type: "error",

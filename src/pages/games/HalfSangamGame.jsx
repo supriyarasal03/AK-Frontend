@@ -2,7 +2,7 @@
 import { useCallback, useEffect, useState } from "react";
 import axiosClient from "../../services/axiosClient";
 import "../../styles/HalfSangamGame.css";
-
+import { useOutletContext } from "react-router-dom";
 const todayString = () => {
   const now = new Date();
   const year = now.getFullYear();
@@ -19,6 +19,7 @@ const getErrorMessage = (error) =>
 
 export default function HalfSangamGame() {
   const [lotteries, setLotteries] = useState([]);
+    const { refreshUser } = useOutletContext();
   const [entries, setEntries] = useState([]);
   const [coins, setCoins] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -229,6 +230,7 @@ export default function HalfSangamGame() {
       });
 
       await Promise.all([loadEntries(), loadCoins()]);
+        refreshUser();
     } catch (error) {
       setNotice({ type: "error", message: getErrorMessage(error) });
     } finally {

@@ -28,6 +28,10 @@ import UserSignup from "../pages/auth/UserSignup";
 import NotFound from "../pages/NotFound";
 import LandingPage from "../pages/LandingPage";
 import AdminCoinRequests from "../pages/admin/AdminCoinRequests";
+import AdminLottery from "../pages/admin/AdminLottery";
+import AdminLotteryResults from "../pages/admin/AdminLotteryResults";
+import AdminLotteryEntries from "../pages/admin/AdminLotteryEntries";
+import AdminAccess from "../pages/admin/AdminAccess";
 
 export default function AppRoutes() {
   return (
@@ -140,6 +144,46 @@ export default function AppRoutes() {
           }
         />
 
+
+        {/* Admin lotteries (add / view / edit / delete) */}
+        <Route
+          path="/admin/lottery"
+          element={
+            <ProtectedRoute>
+              <AdminLottery />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Admin lottery results */}
+        <Route
+          path="/admin/results"
+          element={
+            <ProtectedRoute>
+              <AdminLotteryResults />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Admin lottery entries (bids) */}
+        <Route
+          path="/admin/lottery-entries"
+          element={
+            <ProtectedRoute>
+              <AdminLotteryEntries />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Admin access (manage admins) */}
+        <Route
+          path="/admin/access"
+          element={
+            <ProtectedRoute>
+              <AdminAccess />
+            </ProtectedRoute>
+          }
+        />
 
         {/* Unknown routes */}
         <Route path="*" element={<NotFound />} />

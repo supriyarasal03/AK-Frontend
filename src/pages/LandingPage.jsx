@@ -10,10 +10,10 @@ import {
   X,
 } from "lucide-react";
 import { useState } from "react";
-
-
+import LatestResults from "../components/landing/LatestResults";
+import { sendContactMessage } from "../services/userService";
+import getErrorMessage from "../utils/getErrorMessage";
 import "../styles/landing-page.css";
-
 
 const games = [
   {
@@ -21,55 +21,108 @@ const games = [
     description: "Explore single digit games",
     number: "1",
     type: "single",
-    path: "/games/single-digit",
+    path: "/user/single-digit",
   },
   {
     title: "Jodi Digit",
     description: "Explore jodi digit games",
     number: "72",
     type: "jodi",
-    path: "/games/jodi-digit",
+    path: "/user/jodi-digit",
   },
   {
     title: "Single Pana",
     description: "Explore single pana games",
     number: "123",
     type: "single-pana",
-    path: "/games/single-pana",
+    path: "/user/single-pana",
   },
   {
     title: "Double Pana",
     description: "Explore double pana games",
     number: "456",
     type: "double-pana",
-    path: "/games/double-pana",
+    path: "/user/double-pana",
   },
   {
     title: "Triple Pana",
     description: "Explore triple pana games",
     number: "347",
     type: "triple",
-    path: "/games/triple-pana",
+    path: "/user/triple-pana",
   },
   {
     title: "Half Sangam",
     description: "Explore half sangam games",
     number: "∞",
     type: "half-sangam",
-    path: "/games/half-sangam",
+    path: "/user/half-sangam",
   },
   {
     title: "Full Sangam",
     description: "Explore full sangam games",
     number: "∞",
     type: "full-sangam",
-    path: "/games/full-sangam",
+    path: "/user/full-sangam",
   },
 ];
 
 
 export default function LandingPage() {
   const [menuOpen, setMenuOpen] = useState(false);
+
+
+
+
+
+    const [contactSending, setContactSending] = useState(false);
+  const [contactStatus, setContactStatus] = useState(null);
+
+  async function handleContactSubmit(event) {
+    event.preventDefault();
+
+    // await nantar event.currentTarget null hoto, mhanun aadhich ghet
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+
+    const name = formData.get("name").trim();
+    const email = formData.get("email").trim();
+    const phone = formData.get("phone").trim();
+    const subject = formData.get("subject");
+    const message = formData.get("message").trim();
+
+    // Backend Contact madhe fakt name, phone, message ahet,
+    // mhanun subject ani email message madhech jodto.
+    const fullMessage = `[${subject}] ${message}\nEmail: ${email}`;
+
+    // Contact.message column default 255 characters cha ahe
+    if (fullMessage.length > 255) {
+      setContactStatus({
+        type: "error",
+        message: "Message is too long. Please shorten it.",
+      });
+      return;
+    }
+
+    setContactSending(true);
+    setContactStatus(null);
+
+    try {
+      await sendContactMessage({ name, phone, message: fullMessage });
+      form.reset();
+      setContactStatus({
+        type: "success",
+        message: "Message sent successfully! Our admin team will contact you.",
+      });
+    } catch (err) {
+      setContactStatus({
+        type: "error",
+        message: getErrorMessage(err, "Failed to send message. Please try again."),
+      });
+    } finally {
+      setContactSending(false);
+    }
+  }
 
   return (
     <div className="landing-page">
@@ -211,26 +264,32 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section className="results-section" id="results">
+                <section className="results-section" id="results">
           <div className="section-heading">
             <div>
               <h2>Latest Results</h2>
               <span className="heading-line" />
             </div>
-            <span className="section-note">Results will load from the backend</span>
+
+            <span className="section-note">Today's results</span>
           </div>
 
-          <div className="results-placeholder">
-            <BarChart3 size={28} />
-            <div>
-              <h3>Results dashboard</h3>
-              <p>
-                Your existing Spring Boot APIs will provide the real results
-                when we connect this page.
-              </p>
-            </div>
-          </div>
+          <LatestResults />
         </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       </main>
 
 
@@ -263,37 +322,19 @@ export default function LandingPage() {
       </div>
     </div>
 
-    <form
-      className="contact-form"
-      onSubmit={(event) => {
-        event.preventDefault();
 
-        const form = event.currentTarget;
-        const formData = new FormData(form);
 
-        const name = formData.get("name");
-        const email = formData.get("email");
-        const phone = formData.get("phone");
-        const subject = formData.get("subject");
-        const message = formData.get("message");
 
-        const body = [
-          `Name: ${name}`,
-          `Email: ${email}`,
-          `Phone: ${phone || "Not provided"}`,
-          `Subject: ${subject}`,
-          "",
-          "Message:",
-          message,
-        ].join("\n");
 
-        const mailto = `mailto:YOUR_ADMIN_EMAIL@example.com?subject=${encodeURIComponent(
-          `AK_Game Enquiry: ${subject}`
-        )}&body=${encodeURIComponent(body)}`;
 
-        window.location.href = mailto;
-      }}
-    >
+
+    <form className="contact-form" onSubmit={handleContactSubmit}>
+
+
+
+
+
+
       <div className="contact-form-row">
         <div className="contact-field">
           <label htmlFor="contact-name">Full Name *</label>
@@ -324,13 +365,14 @@ export default function LandingPage() {
 
       <div className="contact-form-row">
         <div className="contact-field">
-          <label htmlFor="contact-phone">Phone Number</label>
+                    <label htmlFor="contact-phone">Phone Number *</label>
           <input
             id="contact-phone"
             name="phone"
             type="tel"
             placeholder="Enter your phone number"
             autoComplete="tel"
+            required
             maxLength={20}
           />
         </div>
@@ -361,9 +403,26 @@ export default function LandingPage() {
         />
       </div>
 
-      <button type="submit" className="btn btn-primary contact-submit">
-        Send Message <ArrowRight size={18} />
+            {contactStatus && (
+        <p
+          className={`contact-status contact-status-${contactStatus.type}`}
+          role="status"
+        >
+          {contactStatus.message}
+        </p>
+      )}
+
+      <button
+        type="submit"
+        className="btn btn-primary contact-submit"
+        disabled={contactSending}
+      >
+        {contactSending ? "Sending..." : "Send Message"}
+        {!contactSending && <ArrowRight size={18} />}
       </button>
+
+
+
 
       <p className="contact-form-note">
         * Required fields

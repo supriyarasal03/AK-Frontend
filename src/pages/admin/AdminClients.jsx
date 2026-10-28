@@ -152,8 +152,11 @@ export default function AdminClients() {
       branchName: client.branchName ?? "",
       phoneNo: client.phoneNo ?? "",
       email: client.email ?? "",
-      password: client.password ?? "",
-      confirmPassword: client.confirmPassword ?? client.password ?? "",
+
+      password: "",
+      confirmPassword: "",
+
+
       bankAccountNo: client.bankAccountNo ?? "",
       bankIfscCode: client.bankIfscCode ?? "",
     });
@@ -303,7 +306,7 @@ export default function AdminClients() {
                       className="ak-input"
                       value={form[field.name]}
                       onChange={handleChange}
-                      required
+                    required={!editingId || !field.name.toLowerCase().includes("password")}
                     />
                   </div>
                 ))}

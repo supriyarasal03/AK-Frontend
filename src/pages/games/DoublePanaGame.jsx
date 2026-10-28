@@ -1,13 +1,13 @@
-import { useCallback, useEffect, useState } from "react";
+  import { useCallback, useEffect, useState } from "react";
 import axiosClient from "../../services/axiosClient";
 import "../../styles/DoublePanaGame.css";
 import { useOutletContext } from "react-router-dom";
 
 const getLocalDate = () => {
-
-
-     const { refreshUser } = useOutletContext();
   const date = new Date();
+
+
+
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, "0");
   const day = String(date.getDate()).padStart(2, "0");
@@ -89,7 +89,9 @@ const formatDate = (value) => {
 };
 
 export default function DoublePanaGame() {
+  const { refreshUser } = useOutletContext();
   const [lotteries, setLotteries] = useState([]);
+
   const [entries, setEntries] = useState([]);
   const [remainingCoins, setRemainingCoins] = useState(null);
 
@@ -130,11 +132,14 @@ export default function DoublePanaGame() {
       setLotteries(lotteryList);
           refreshUser();
     } catch (error) {
-      setErrorMessage(getErrorMessage(error));
+
+
+           setErrorMessage(getErrorMessage(error));
     } finally {
       setLoadingLotteries(false);
     }
-  }, []);
+  }, [refreshUser]);
+
 
   const loadEntries = useCallback(async () => {
     setLoadingEntries(true);
@@ -242,10 +247,9 @@ loadLotteries();
       return "Bid Digit must contain exactly three digits.";
     }
 
-    const points = Number(formData.entryBitPoints);
+   const points = Number(formData.entryBitPoints);
 if (!Number.isInteger(points) || points < 10 || points > 500) {
-  setNotice({ type: "error", message: "Points must be between 10 and 500." });
-  return;
+  return "Points must be between 10 and 500.";
 }
 
 
@@ -311,6 +315,8 @@ if (!Number.isInteger(points) || points < 10 || points > 500) {
       }));
 
       await loadEntries();
+
+      refreshUser();
 
       try {
         const storedUser = sessionStorage.getItem("loggedUser");

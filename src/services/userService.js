@@ -41,3 +41,23 @@ export async function getGameHistory() {
   const response = await api.get("/api/game-history");
   return Array.isArray(response.data) ? response.data : [];
 }
+
+
+
+
+
+// Home page results साठी: सर्व lotteries (जुन्या index.html प्रमाणेच /api/allLotteries)
+export async function getLotteries() {
+  const response = await api.get("/api/allLotteries");
+  return Array.isArray(response.data) ? response.data : [];
+}
+
+
+
+
+
+// Contact form -> POST /api/contact (backend ला name, phone, message तिन्ही हवेत)
+export async function sendContactMessage({ name, phone, message }) {
+  const response = await api.post("/api/contact", { name, phone, message });
+  return response.data;
+}
