@@ -105,6 +105,32 @@
 
 
 
+/* Field validation */
+
+.ak-input.ak-input-invalid {
+  border-color: #e5484d;
+}
+
+.ak-input.ak-input-invalid:focus {
+  border-color: #e5484d;
+  box-shadow: 0 0 0 3px rgba(229, 72, 77, 0.14);
+}
+
+.ak-field-error {
+  margin: 6px 0 0;
+  color: #b42318;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.ak-field-hint {
+  margin: 6px 0 0;
+  color: #6b7a90;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+
 
 
 

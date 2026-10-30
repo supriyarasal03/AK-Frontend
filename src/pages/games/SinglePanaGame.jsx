@@ -10,6 +10,16 @@ import axiosClient from "../../services/axiosClient";
 import "../../styles/SingleDigitGame.css";
 
 export default function SinglePanaGame() {
+
+  const DAYS = {
+  SUNDAY: 0,
+  MONDAY: 1,
+  TUESDAY: 2,
+  WEDNESDAY: 3,
+  THURSDAY: 4,
+  FRIDAY: 5,
+  SATURDAY: 6,
+};
   const today = new Date().toLocaleDateString("en-CA");
 
    const { refreshUser } = useOutletContext();
@@ -105,6 +115,35 @@ export default function SinglePanaGame() {
       setError("Please select a lottery.");
       return;
     }
+
+
+
+    const selectedLottery = lotteries.find(
+      (lottery) => lottery.lotteryName === formData.entryLotteryName
+    );
+    const runningDays = selectedLottery?.lotteryRunnningDays;
+
+    if (runningDays) {
+      const allowedDays = runningDays
+        .split(",")
+        .map((day) => day.trim().toUpperCase())
+        .filter((day) => day in DAYS);
+      const selectedDay = new Date(`${formData.entryBidDate}T12:00:00`).getDay();
+
+      if (
+        allowedDays.length > 0 &&
+        !allowedDays.some((day) => DAYS[day] === selectedDay)
+      ) {
+        setError(
+          `Please select only on these days: ${allowedDays
+            .map((day) => day.toLowerCase())
+            .join(", ")}`
+        );
+        return;
+      }
+    }
+
+
 
     setLoading(true);
 

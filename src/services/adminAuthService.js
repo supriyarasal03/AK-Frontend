@@ -9,14 +9,14 @@ export async function adminLogin(adminEmail, adminPassword) {
 
     return response.data;
   } catch (error) {
-    const message =
+        const message =
+      error.response?.data?.error ||
       error.response?.data?.message ||
       (typeof error.response?.data === "string"
         ? error.response.data
         : null) ||
       error.message ||
       "Unable to login. Please try again.";
-
       throw new Error(message, { cause: error });
   }
 }

@@ -208,11 +208,19 @@ export default function SingleDigitGame() {
         entryBitPoints: points,
       });
 
-      if (response.data?.coinsAmount != null) {
-        setCoins(response.data.coinsAmount);
-      } else {
-        await loadUser();
-      }
+
+
+     const remainingCoins = response.data?.remainingCoins;
+
+if (remainingCoins != null) {
+  setCoins(remainingCoins);
+} else {
+  await loadUser();
+}
+
+
+
+
 
       setNotice({
         type: "success",

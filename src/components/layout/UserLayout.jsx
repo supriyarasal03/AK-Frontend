@@ -70,7 +70,7 @@ export default function UserLayout() {
 
   const handleLogout = useCallback(async () => {
   try {
-    await api.get("/logout");
+  await api.get("/api/logout");
   } catch (error) {
     console.error("Backend logout failed:", error);
   } finally {

@@ -1,13 +1,11 @@
-:root {
-  --ak-sidebar-width: 268px;
-  --ak-sidebar-bg: #111c32;
-  --ak-sidebar-border: rgba(255, 255, 255, 0.09);
-  --ak-sidebar-text: #c5d0e2;
-  --ak-sidebar-muted: #8499bb;
-  --ak-primary: #5278f5;
-  --ak-page-bg: #f3f6fb;
-  --ak-text: #17233b;
-}
+/* =====================================================================
+   AdminLayout.css  (src/styles/AdminLayout.css)
+   AdminLayout.jsx मधील सर्व class names साठी style.
+   - Desktop : sticky sidebar + collapse (PanelLeft) button
+   - Mobile  : hamburger (☰) ने sidebar drawer उघडतो, overlay वर click केल्यास बंद
+   सर्व rules ".ak-admin-layout" खाली आहेत, त्यामुळे AdminDashboard.css
+   च्या जुन्या ".ak-sidebar" rules वर हे नेहमी भारी पडतात (import order काहीही असो).
+   ===================================================================== */
 
 .ak-admin-layout,
 .ak-admin-layout * {
@@ -15,209 +13,556 @@
 }
 
 .ak-admin-layout {
+  --akl-sidebar-width: 268px;
+  --akl-sidebar-width-collapsed: 84px;
+  --akl-sidebar-bg: #111c32;
+  --akl-sidebar-line: rgba(255, 255, 255, 0.09);
+  --akl-sidebar-text: #c5d0e2;
+  --akl-sidebar-muted: #8499bb;
+  --akl-primary: #4169e1;
+  --akl-bg: #f4f7fb;
+  --akl-surface: #ffffff;
+  --akl-text: #17243b;
+  --akl-muted: #78859a;
+  --akl-border: #e8edf4;
+
   display: flex;
   width: 100%;
   min-height: 100vh;
-  background: var(--ak-page-bg);
-  color: var(--ak-text);
+  color: var(--akl-text);
+  background: var(--akl-bg);
   font-family: Inter, "Segoe UI", Arial, sans-serif;
+  font-size: 14px;
 }
 
-/* Sidebar */
+/* ---------------------------------------------------------------------
+   Sidebar (desktop: sticky)
+   --------------------------------------------------------------------- */
 
-.ak-admin-sidebar {
-  position: fixed;
-  inset: 0 auto 0 0;
-  z-index: 1000;
+.ak-admin-layout .ak-sidebar {
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
+  flex: 0 0 var(--akl-sidebar-width);
+  width: var(--akl-sidebar-width);
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
   display: flex;
   flex-direction: column;
-  width: var(--ak-sidebar-width);
-  height: 100vh;
-  background: var(--ak-sidebar-bg);
-  color: var(--ak-sidebar-text);
-  border-right: 1px solid var(--ak-sidebar-border);
-  transition: transform 0.25s ease;
+  overflow: hidden;
+  color: var(--akl-sidebar-text);
+  background: var(--akl-sidebar-bg);
+  border-right: 1px solid var(--akl-sidebar-line);
+  z-index: 50;
+  transition: width 0.25s ease, flex-basis 0.25s ease, transform 0.28s ease;
 }
 
-.ak-sidebar-brand {
+/* Brand */
+
+.ak-admin-layout .ak-sidebar-brand {
+  flex: 0 0 auto;
   display: flex;
   align-items: center;
   gap: 12px;
-  min-height: 104px;
-  padding: 22px 18px;
-  border-bottom: 1px solid var(--ak-sidebar-border);
+  min-height: 88px;
+  padding: 18px;
+  border-bottom: 1px solid var(--akl-sidebar-line);
 }
 
-.ak-brand-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.ak-admin-layout .ak-brand-icon {
   flex: 0 0 42px;
   width: 42px;
   height: 42px;
+  display: grid;
+  place-items: center;
   color: #ffffff;
-  background: rgba(82, 120, 245, 0.18);
-  border: 1px solid rgba(139, 164, 255, 0.2);
+  background: linear-gradient(140deg, #6487ff, #3c54d9);
   border-radius: 12px;
 }
 
-.ak-brand-text {
+.ak-admin-layout .ak-brand-text {
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 5px;
-  min-width: 0;
 }
 
-.ak-brand-name {
+.ak-admin-layout .ak-brand-text h2 {
+  margin: 0;
   color: #ffffff;
-  font-size: 21px;
+  font-size: 20px;
   font-weight: 750;
+  line-height: 1.1;
   letter-spacing: 0.5px;
 }
 
-.ak-brand-subtitle {
+.ak-admin-layout .ak-brand-text span {
   color: #aebed9;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 1.5px;
 }
 
-.ak-sidebar-close {
+.ak-admin-layout .ak-mobile-close {
   display: none;
-  align-items: center;
-  justify-content: center;
-  margin-left: auto;
-  padding: 7px;
-  color: #ffffff;
-  background: transparent;
-  border: 0;
-  border-radius: 8px;
-  cursor: pointer;
 }
 
-/* Navigation */
+/* Menu (हा भाग scroll होतो, brand आणि logout जागेवर राहतात) */
 
-.ak-sidebar-navigation {
-  flex: 1;
+.ak-admin-layout .ak-sidebar-content {
+  flex: 1 1 auto;
   min-height: 0;
-  padding: 13px 12px 20px;
+  padding: 8px 12px 16px;
   overflow-x: hidden;
   overflow-y: auto;
-  scrollbar-color: #34435e transparent;
   scrollbar-width: thin;
+  scrollbar-color: #34435e transparent;
 }
 
-.ak-menu-group {
-  margin-bottom: 17px;
+.ak-admin-layout .ak-sidebar-content::-webkit-scrollbar {
+  width: 6px;
 }
 
-.ak-menu-heading {
-  margin: 12px 10px 10px;
-  color: var(--ak-sidebar-muted);
+.ak-admin-layout .ak-sidebar-content::-webkit-scrollbar-thumb {
+  background: #34435e;
+  border-radius: 6px;
+}
+
+.ak-admin-layout .ak-menu-group {
+  margin-bottom: 10px;
+}
+
+.ak-admin-layout .ak-menu-heading {
+  margin: 16px 10px 8px;
+  color: var(--akl-sidebar-muted);
   font-size: 10px;
   font-weight: 800;
   letter-spacing: 1.4px;
 }
 
-.ak-menu-link {
+.ak-admin-layout .ak-menu {
+  display: block;
+}
+
+.ak-admin-layout .ak-menu-link {
   position: relative;
   display: flex;
   align-items: center;
-  gap: 13px;
+  gap: 12px;
   width: 100%;
-  min-height: 47px;
+  min-height: 44px;
   margin: 3px 0;
-  padding: 11px 12px;
-  color: var(--ak-sidebar-text);
+  padding: 0 12px;
+  color: var(--akl-sidebar-text);
   text-decoration: none;
   border: 1px solid transparent;
-  border-radius: 9px;
-  transition:
-    background 0.18s ease,
-    color 0.18s ease,
-    border-color 0.18s ease;
+  border-radius: 10px;
+  transition: background 0.18s ease, color 0.18s ease;
 }
 
-.ak-menu-link:hover {
+.ak-admin-layout .ak-menu-link:hover {
   color: #ffffff;
   background: rgba(255, 255, 255, 0.07);
 }
 
-.ak-menu-link-active {
+.ak-admin-layout .ak-menu-link.active {
   color: #ffffff;
-  background: rgba(82, 120, 245, 0.2);
-  border-color: rgba(115, 145, 255, 0.22);
+  background: linear-gradient(105deg, #4169e1, #526fe8);
+  box-shadow: 0 5px 15px rgba(45, 83, 205, 0.28);
 }
 
-.ak-menu-link-active::before {
-  position: absolute;
-  top: 9px;
-  bottom: 9px;
-  left: -12px;
-  width: 3px;
-  content: "";
-  background: #7895ff;
-  border-radius: 0 4px 4px 0;
+.ak-admin-layout .ak-menu-icon {
+  flex: 0 0 auto;
 }
 
-.ak-menu-icon {
-  flex: 0 0 21px;
-  color: #b8c7df;
-}
-
-.ak-menu-link-active .ak-menu-icon {
-  color: #a8bcff;
-}
-
-.ak-menu-label {
+.ak-admin-layout .ak-menu-label {
   flex: 1;
-  font-size: 13px;
+  min-width: 0;
+  overflow: hidden;
+  font-size: 13.5px;
   font-weight: 550;
   line-height: 1.4;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.ak-menu-chevron {
-  flex: 0 0 17px;
-  color: #8092b0;
-  transition: transform 0.18s ease;
+.ak-admin-layout .ak-menu-chevron {
+  flex: 0 0 auto;
+  opacity: 0.6;
+  transition: transform 0.18s ease, opacity 0.18s ease;
 }
 
-.ak-menu-link:hover .ak-menu-chevron {
+.ak-admin-layout .ak-menu-link:hover .ak-menu-chevron,
+.ak-admin-layout .ak-menu-link.active .ak-menu-chevron {
+  opacity: 1;
   transform: translateX(2px);
 }
 
-/* Sidebar profile and logout */
+/* Logout (sidebar च्या तळाशी) */
 
-.ak-sidebar-bottom {
-  padding: 14px 14px 16px;
-  border-top: 1px solid var(--ak-sidebar-border);
+.ak-admin-layout .ak-sidebar-bottom {
+  flex: 0 0 auto;
+  margin-top: 0;
+  padding: 14px;
+  border-top: 1px solid var(--akl-sidebar-line);
 }
 
-.ak-admin-mini-profile {
+.ak-admin-layout .ak-logout-button {
+  width: 100%;
+  min-height: 42px;
+  padding: 0 12px;
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 4px 3px 14px;
+  gap: 12px;
+  color: #d6deeb;
+  font: inherit;
+  text-align: left;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.18s ease, color 0.18s ease;
 }
 
-.ak-profile-avatar,
-.ak-header-avatar {
+.ak-admin-layout .ak-logout-button:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* ---------------------------------------------------------------------
+   Overlay (फक्त mobile वर दिसतो)
+   --------------------------------------------------------------------- */
+
+.ak-admin-layout .ak-sidebar-overlay {
+  display: none;
+}
+
+/* ---------------------------------------------------------------------
+   Main area + header
+   --------------------------------------------------------------------- */
+
+.ak-admin-layout .ak-admin-main {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.ak-admin-layout .ak-admin-header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  min-height: 76px;
+  padding: 12px 28px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: var(--akl-surface);
+  border-bottom: 1px solid var(--akl-border);
+  box-shadow: 0 1px 2px rgba(17, 28, 50, 0.04);
+}
+
+.ak-admin-layout .ak-header-left {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ak-admin-layout .ak-header-icon {
   flex: 0 0 40px;
   width: 40px;
   height: 40px;
-  color: #dce5ff;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0;
+  display: inline-grid;
+  place-items: center;
+  color: #44546f;
+  background: var(--akl-surface);
+  border: 1px solid #dde4ef;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.18s ease, color 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.ak-admin-layout .ak-header-icon:hover {
+  color: var(--akl-primary);
+  background: #f1f5ff;
+  border-color: #cdd9f7;
+}
+
+.ak-admin-layout .ak-header-icon:focus-visible,
+.ak-admin-layout .ak-header-logout:focus-visible,
+.ak-admin-layout .ak-menu-link:focus-visible,
+.ak-admin-layout .ak-logout-button:focus-visible,
+.ak-admin-layout .ak-mobile-close:focus-visible {
+  outline: 2px solid #7895ff;
+  outline-offset: 2px;
+}
+
+/* Desktop वर hamburger लपवलेला; collapse button दिसतो */
+.ak-admin-layout .ak-header-icon.ak-mobile-menu {
+  display: none;
+}
+
+.ak-admin-layout .ak-collapse-button svg {
+  transition: transform 0.25s ease;
+}
+
+.ak-admin-layout.sidebar-collapsed .ak-collapse-button svg {
+  transform: rotate(180deg);
+}
+
+.ak-admin-layout .ak-header-title {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.ak-admin-layout .ak-header-title span {
+  color: var(--akl-muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+}
+
+.ak-admin-layout .ak-header-title h1 {
+  margin: 0;
+  overflow: hidden;
+  color: var(--akl-text);
+  font-size: 21px;
+  font-weight: 750;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ak-admin-layout .ak-header-user {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ak-admin-layout .ak-header-user-details {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  text-align: right;
+}
+
+.ak-admin-layout .ak-header-user-details span {
+  color: var(--akl-text);
+  font-size: 13.5px;
+  font-weight: 650;
+}
+
+.ak-admin-layout .ak-header-user-details small {
+  color: var(--akl-muted);
+  font-size: 11.5px;
+}
+
+.ak-admin-layout .ak-user-avatar {
+  flex: 0 0 40px;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  color: var(--akl-primary);
+  background: #edf2ff;
+  border: 1px solid #dbe5ff;
   border-radius: 50%;
 }
 
-.ak-profile-info {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  min-width: 0;
+.ak-admin-layout .ak-header-logout {
+  flex: 0 0 40px;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  display: inline-grid;
+  place-items: center;
+  color: #d64550;
+  background: var(--akl-surface);
+  border: 1px solid #f1d3d6;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.18s ease;
 }
 
+.ak-admin-layout .ak-header-logout:hover {
+  background: #fff1f2;
+}
+
+/* Page content + footer */
+
+.ak-admin-layout .ak-admin-content {
+  flex: 1 1 auto;
+  width: 100%;
+  max-width: 1800px;
+  min-width: 0;
+  margin: 0 auto;
+  padding: 28px 28px 34px;
+}
+
+.ak-admin-layout .ak-admin-footer {
+  padding: 16px 28px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 12px;
+  color: var(--akl-muted);
+  font-size: 12px;
+  background: var(--akl-surface);
+  border-top: 1px solid var(--akl-border);
+}
+
+/* ---------------------------------------------------------------------
+   Desktop: collapsed sidebar (फक्त icons)
+   --------------------------------------------------------------------- */
+
+@media (min-width: 901px) {
+  .ak-admin-layout.sidebar-collapsed .ak-sidebar {
+    flex-basis: var(--akl-sidebar-width-collapsed);
+    width: var(--akl-sidebar-width-collapsed);
+  }
+
+  .ak-admin-layout.sidebar-collapsed .ak-brand-text,
+  .ak-admin-layout.sidebar-collapsed .ak-menu-label,
+  .ak-admin-layout.sidebar-collapsed .ak-menu-chevron {
+    display: none;
+  }
+
+  .ak-admin-layout.sidebar-collapsed .ak-sidebar-brand {
+    justify-content: center;
+    padding: 18px 0;
+  }
+
+  .ak-admin-layout.sidebar-collapsed .ak-sidebar-content {
+    padding-inline: 10px;
+  }
+
+  /* Heading च्या जागी बारीक रेघ */
+  .ak-admin-layout.sidebar-collapsed .ak-menu-heading {
+    height: 1px;
+    margin: 14px 12px;
+    padding: 0;
+    overflow: hidden;
+    font-size: 0;
+    background: var(--akl-sidebar-line);
+  }
+
+  .ak-admin-layout.sidebar-collapsed .ak-menu-link,
+  .ak-admin-layout.sidebar-collapsed .ak-logout-button {
+    justify-content: center;
+    padding: 0;
+  }
+
+  .ak-admin-layout.sidebar-collapsed .ak-sidebar-bottom {
+    padding-inline: 10px;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   Tablet / Mobile  (<= 900px): sidebar drawer
+   --------------------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .ak-admin-layout .ak-sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    align-self: auto;
+    width: min(290px, 86vw);
+    flex-basis: auto;
+    height: 100vh;
+    height: 100dvh;
+    z-index: 1100;
+    transform: translateX(-100%);
+    box-shadow: none;
+  }
+
+  .ak-admin-layout .ak-sidebar.mobile-open {
+    transform: translateX(0);
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.35);
+  }
+
+  .ak-admin-layout .ak-sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1090;
+    display: block;
+    width: 100%;
+    padding: 0;
+    background: rgba(9, 16, 32, 0.55);
+    border: 0;
+    cursor: pointer;
+  }
+
+  .ak-admin-layout .ak-mobile-close {
+    display: grid;
+    place-items: center;
+    flex: 0 0 36px;
+    width: 36px;
+    height: 36px;
+    margin-left: auto;
+    padding: 0;
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.08);
+    border: 0;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  .ak-admin-layout .ak-header-icon.ak-mobile-menu {
+    display: inline-grid;
+  }
+
+  .ak-admin-layout .ak-header-icon.ak-collapse-button {
+    display: none;
+  }
+
+  .ak-admin-layout .ak-admin-header {
+    min-height: 64px;
+    padding: 10px 16px;
+  }
+
+  .ak-admin-layout .ak-header-title h1 {
+    font-size: 18px;
+  }
+
+  .ak-admin-layout .ak-admin-content {
+    padding: 18px 16px 26px;
+  }
+
+  .ak-admin-layout .ak-admin-footer {
+    padding: 14px 16px;
+  }
+
+  /* Drawer उघडा असताना मागचे page scroll होऊ नये */
+  body:has(.ak-admin-layout .ak-sidebar.mobile-open) {
+    overflow: hidden;
+  }
+}
+
+@media (max-width: 600px) {
+  .ak-admin-layout .ak-header-title span,
+  .ak-admin-layout .ak-header-user-details {
+    display: none;
+  }
+
+  .ak-admin-layout .ak-header-user {
+    gap: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ak-admin-layout .ak-sidebar,
+  .ak-admin-layout .ak-collapse-button svg {
+    transition: none;
+  }
+}

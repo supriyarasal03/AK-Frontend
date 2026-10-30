@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-
+import ForgotPassword from "../pages/auth/ForgotPassword";
 import ProtectedRoute from "./ProtectedRoute";
 import UserProtectedRoute from "./UserProtectedRoute.jsx";
 import SinglePanaGame from "../pages/games/SinglePanaGame";
@@ -43,6 +43,13 @@ export default function AppRoutes() {
         {/* User authentication */}
         <Route path="/login" element={<UserLogin />} />
         <Route path="/signup" element={<UserSignup />} />
+
+
+
+                {/* User authentication */}
+        <Route path="/login" element={<UserLogin />} />
+        <Route path="/signup" element={<UserSignup />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
 
         {/* Admin authentication */}
         <Route path="/admin/login" element={<AdminLogin />} />

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import userAuthService from "../../services/userAuthService";
 import "../../styles/UserLogin.css";
+import { Link } from "react-router-dom";
 
 export default function UserLogin() {
   const navigate = useNavigate();
@@ -109,6 +110,11 @@ export default function UserLogin() {
             required
           />
         </div>
+
+
+                <p className="user-login-forgot">
+          <Link to="/forgot-password">Forgot password?</Link>
+        </p>
 
         <button
           type="submit"

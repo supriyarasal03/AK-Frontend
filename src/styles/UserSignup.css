@@ -270,3 +270,38 @@
     gap: 18px;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+/* Field validation */
+
+.user-signup-field input.user-signup-input-invalid {
+  border-color: rgba(248, 113, 113, 0.7);
+}
+
+.user-signup-field input.user-signup-input-invalid:focus {
+  border-color: #f87171;
+  box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.15);
+}
+
+.user-signup-field-error {
+  margin: 0;
+  color: #fca5a5;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.user-signup-field-hint {
+  margin: 0;
+  color: #71819c;
+  font-size: 12px;
+  line-height: 1.4;
+}
